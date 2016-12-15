@@ -272,4 +272,3 @@ int getTimeFromString(char input[], TTime *Time)
 
     return isTimeValid((*Time));
 }
-

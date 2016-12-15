@@ -110,11 +110,11 @@ void loadAppointment(TAppointment * appointment, char *line){
 
     if(strncmp(line, "<Duration>", 10) == 0){
         int len = strlen(line + 10) -12;
-        if (strncmp(line + 6 + len, "</Duration>", 11) == 0 )
+
+        if (strncmp(line + 10 + len, "</Duration>", 11) == 0 )
         {
             (*appointment).Duration = calloc( len + 1, sizeof( TTime ) );
             getTimeFromString(line + 6, (*appointment).Duration);
         }
     }
-
 }
