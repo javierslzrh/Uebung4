@@ -10,6 +10,7 @@
 #define database_h
 
 void saveCalendar();
-
+void loadCalendar();
+void loadAppointment();
 
 #endif /* database_h */

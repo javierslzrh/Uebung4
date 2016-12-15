@@ -33,9 +33,9 @@ void printDate(TAppointment * Date)
         case 6: printf("\nSa, "); break;
         case 7: printf("\nSo, "); break;
     }
-    
-    
-    printf("%02d.%02d.%04i:\n", Date->datum.Day, Date->datum.Month, Date->datum.Year); // resolver digitos de Anio %i || %04i
+
+
+    printf("%02d.%02d.%04i\n", Date->datum.Day, Date->datum.Month, Date->datum.Year); // resolver digitos de Anio %i || %04i
 }
 
 
@@ -179,7 +179,7 @@ int isDateValid(TDate date)
                     return 1;
                 else
                     return 0;
-                
+
             }else
             {
                 if (date.Day >= 1 && date.Day <= 28)
@@ -203,10 +203,10 @@ int getDateFromString(char input[], TDate *date)
 {
     char *p;
     int i;
-    
-    
+
+
     p = strtok(input, ".");
-    
+
     for(i = 0; (p != NULL); i++)
     {
         if(i == 0)
@@ -223,16 +223,16 @@ int getDateFromString(char input[], TDate *date)
         }
         p = strtok(NULL, ".");
     }
-    
+
     static int t[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
     int year = (*date).Year;
     if (date->Month < 3)
     {
         year = (*date).Year - 1;
     }
-    
+
     date->Wochentag = (year + year/4 - year/100 + year/400 + t[date->Month-1] + date->Day ) % 7;
-    
+
     return isDateValid(*date);
 }
 /**************************************************************
@@ -244,7 +244,7 @@ int isTimeValid(TTime Time)
         if (Time.Minute >= 0 && Time.Minute <= 59)
             if (Time.Second >= 0 && Time.Second <= 59)
                 return 1;
-    
+
     return 0;
 }
 /**************************************************************
@@ -254,11 +254,11 @@ int getTimeFromString(char input[], TTime *Time)
 {
     char *p;
     int i;
-    
+
     p = strtok(input, ":");
-    
+
     Time->Second = 0;
-    
+
     for(i = 0; (p != NULL); i++){
         if(i == 0){
             Time->Hour = atoi(p);
@@ -269,7 +269,7 @@ int getTimeFromString(char input[], TTime *Time)
         }
         p = strtok(NULL, ":");
     }
-    
+
     return isTimeValid((*Time));
 }
 

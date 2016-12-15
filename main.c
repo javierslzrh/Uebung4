@@ -14,11 +14,12 @@
 #include "calendar.h"
 #include "datetime.h"
 #include "tools.h"
-
+#include "database.h"
 
 
 int main()
 {
+    loadCalendar();
     //Deklaration der Variablen für das Menü
     int wahl_m;
     char *Menu = "Terminverwaltung V 0.2";
@@ -29,15 +30,15 @@ int main()
         "5. Termine sortieren",
         "6. Termine auflisten",
         "7. Programm beenden"};
-    
-    
-    
+
+
+
     do
     {
         clearScreen();
         wahl_m = getMenu(Menu, punkte, NUMPOINTS);
-        
-        
+
+
         switch (wahl_m) {
             case 1: createAppointment();
                 break;
@@ -55,18 +56,18 @@ int main()
                 break;
             default: printf("\nDas ist keine Option");
                 break;
-                
+
         }
-        
-        
+
+
         //waitForEnter();
         //if (askYesOrNo("\nMoechten Sie noch einmal (j/n)? ") == 1) {
         //clearScreen();
         //return 0;
         //}
-        
+
     } while(wahl_m != 7); //(wahl_m == 0)
-    
-    
+
+
     return 0;
 }

@@ -15,5 +15,6 @@ void waitForEnter();
 int askYesOrNo(char *);
 void printLine(char, int);
 void getText(char *textEingabe, int Maxlen, char **text, int requiered);
+void lTrim(char *);
 
 #endif /* tools_h */
