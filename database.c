@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "database.h"
 #include "datastructure.h"
+#include "database.h"
 #include "datetime.h"
 #include "tools.h"
 
@@ -30,7 +30,7 @@ void loadCalendar()
     char line[TEXT];
 
     file = fopen("calendar.xml", "r");
-    int flag = 0;
+    int flag = -1;
     int linesCount = 0;
     TAppointment *appointment = NULL;
     while(1)
@@ -55,28 +55,31 @@ void loadCalendar()
         }
 
         if(strncmp(line, "</Appointment>", 14) == 0){
-            //free(appointment);
             flag = 0;
         }
 
         if(flag == 1){
-            loadAppointment(appointment, line);
+            loadAppointment(&appointment, line);
+        }else if(flag == 0) {
+            if(appointment != NULL) {
+                Calendar[countAppointment] = *appointment;
+                countAppointment++;
+                free(appointment);
+            }
         }
     }
 }
 
-void loadAppointment(TAppointment * appointment, char *line){
+void loadAppointment(TAppointment **appointment, char *line){
 
-    if(appointment == NULL){
-        appointment = malloc(sizeof(*appointment));
-    }
+    *appointment = malloc(sizeof(TAppointment));
 
     if(strncmp(line, "<Date>", 6) == 0){
 
         int len = strlen(line + 6) -8;
         if (strncmp(line + 6 + len, "</Date>", 7) == 0 )
         {
-            getDateFromString(line + 6, &(*appointment).datum);
+            getDateFromString(line + 6, &(**appointment).datum);
         }
     }
 
@@ -84,7 +87,7 @@ void loadAppointment(TAppointment * appointment, char *line){
         int len = strlen(line + 6) -8;
         if (strncmp(line + 6 + len, "</Time>", 7) == 0 )
         {
-            getTimeFromString(line + 6, &(*appointment).zeit);
+            getTimeFromString(line + 6, &(**appointment).zeit);
         }
     }
 
@@ -93,8 +96,8 @@ void loadAppointment(TAppointment * appointment, char *line){
 
         if (strncmp(line + 13 + len, "</Description>", 14) == 0 )
         {
-            (*appointment).Description = calloc( len + 1, sizeof( char ) );
-            strncpy((*appointment).Description, line + 13, len);
+            (**appointment).Description = calloc( len + 1, sizeof( char ) );
+            strncpy((**appointment).Description, line + 13, len);
         }
     }
 
@@ -103,8 +106,8 @@ void loadAppointment(TAppointment * appointment, char *line){
 
         if (strncmp(line + 10 + len, "</Location>", 11) == 0 )
         {
-            (*appointment).Place = calloc( len + 1, sizeof( char ) );
-            strncpy((*appointment).Place, line + 10, len);
+            (**appointment).Place = calloc( len + 1, sizeof( char ) );
+            strncpy((**appointment).Place, line + 10, len);
         }
     }
 
@@ -113,8 +116,8 @@ void loadAppointment(TAppointment * appointment, char *line){
 
         if (strncmp(line + 10 + len, "</Duration>", 11) == 0 )
         {
-            (*appointment).Duration = calloc( len + 1, sizeof( TTime ) );
-            getTimeFromString(line + 6, (*appointment).Duration);
+            (**appointment).Duration = calloc( len + 1, sizeof( TTime ) );
+            getTimeFromString(line + 6, (**appointment).Duration);
         }
     }
 }

@@ -11,6 +11,6 @@
 
 void saveCalendar();
 void loadCalendar();
-void loadAppointment();
+void loadAppointment(TAppointment **appointment, char *line);
 
 #endif /* database_h */
